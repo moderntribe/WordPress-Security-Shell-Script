@@ -72,6 +72,7 @@ then
 	git pull
 
 	echo "Attempting to update Submodules..."
+	git submodule init
 	git submodule update
 
 	echo "Cleaning GIT..."

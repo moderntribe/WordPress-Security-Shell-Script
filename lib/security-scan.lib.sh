@@ -104,12 +104,12 @@ fi
 # Adjusting directory permissions
 if [ -z ${DIR_PERM} ]; then DIR_PERM="755"; fi
 echo "Updating file permissions on all directories to be $DIR_PERM"
-find "$PWD" -type d -exec chmod "$DIR_PERM" {} \;
+find "$PWD" -type d ! -perm "$DIR_PERM" -exec chmod "$DIR_PERM" {} \;
 
 # Adjust file permissions
 if [ -z ${FILE_PERM} ]; then FILE_PERM="644"; fi
 echo "Updating file permissions on all files to be $FILE_PERM"
-find "$PWD" -type f -exec chmod "$FILE_PERM" {} \;
+find "$PWD" -type f ! -perm "$FILE_PERM" -exec chmod "$FILE_PERM" {} \;
 
 # Update all file owners
 echo "Update all files to be owned by $CODE_OWNER"

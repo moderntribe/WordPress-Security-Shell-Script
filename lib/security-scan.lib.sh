@@ -30,7 +30,6 @@
 ## TODO:
 ##
 ## * Scan nginx/htaccess files for security
-## * Update permissions scan to ignore files with correct perms
 ##
 
 # Check for required variables.

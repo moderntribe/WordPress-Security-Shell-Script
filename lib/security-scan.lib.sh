@@ -3,7 +3,7 @@
 ## WordPress Security Scan Script
 ## Copyright by Peter Chester of Modern Tribe, Inc.
 ## Permission to copy and modify is granted under the GPL2 license
-## Last revised 2012-09-27
+## Last revised 2012-10-03
 ##
 ## DESCRIPTION:
 ##
@@ -33,7 +33,7 @@
 ##
 
 # Check for required variables.
-REQUIRED_VARS=( "ROOT_DIR" "WRITEABLE_DIRS" "WRITEABLE_FILES" "WEB_OWNER" "CODE_OWNER" )
+REQUIRED_VARS=( "ROOT_DIR" )
 for REQUIRED_VAR in ${REQUIRED_VARS[@]}
 do
 	# Test that vars are set
@@ -55,10 +55,10 @@ else
 	exit
 fi
 
-echo "Running scan on $PWD..."
+echo "Running scan on $ROOT_DIR..."
 
 # SVN Scan
-if [ -d ".svn" ]
+if [ -z $BYPASS_SVN ] && [ -d ".svn" ]
 then
 	echo "Detected SVN environment"
 
@@ -76,11 +76,11 @@ then
 fi
 
 # GIT Scan
-if [ -d ".git" ]
+if [ -z $BYPASS_GIT ] && [ -d ".git" ]
 then
 	echo "Detected GIT environment"
 
-	if [ -f ".git/index.lock" ]
+	if [ $KILL_GITLOCK ] && [ f ".git/index.lock" ]
 	then
 		echo "GIT appears to be LOCKED. Deleteing .git/index.lock."
 		rm -rf ".git/index.lock"
@@ -93,64 +93,79 @@ then
 	git pull
 
 	echo "Attempting to update Submodules..."
-	git submodule init
-	git submodule update
+	git submodule update --init --recursive
+	#git submodule foreach --recursive git pull
 
 	echo "Cleaning GIT..."
 	git clean -df
 fi
 
 # Adjusting directory permissions
-if [ -z ${DIR_PERM} ]; then DIR_PERM="755"; fi
+if [ -z $DIR_PERM ]; then DIR_PERM="755"; fi
 echo "Updating file permissions on all directories to be $DIR_PERM"
-find "$PWD" -type d ! -perm "$DIR_PERM" -exec chmod "$DIR_PERM" {} \;
+find "$ROOT_DIR" -type d ! -perm "$DIR_PERM" -exec chmod "$DIR_PERM" {} \;
 
 # Adjust file permissions
-if [ -z ${FILE_PERM} ]; then FILE_PERM="644"; fi
+if [ -z $FILE_PERM ]; then FILE_PERM="644"; fi
 echo "Updating file permissions on all files to be $FILE_PERM"
-find "$PWD" -type f ! -perm "$FILE_PERM" -exec chmod "$FILE_PERM" {} \;
+find "$ROOT_DIR" -type f ! -perm "$FILE_PERM" -exec chmod "$FILE_PERM" {} \;
 
 # Update all file owners
-echo "Update all files to be owned by $CODE_OWNER"
-chown $CODE_OWNER "$PWD" -R
+if [ $CODE_OWNER ]
+	then
+	echo "Update all files to be owned by $CODE_OWNER"
+	chown "$CODE_OWNER" "$ROOT_DIR" -R
+fi
 
 # Process writable directories
-for DIR in ${WRITEABLE_DIRS[@]}
-do
-	# Scan directory
-	if [ -d "$DIR" ]
+if [ "$WRITEABLE_DIRS" ]
 	then
-		echo "Scanning and removing PHP files from $DIR..."
-		find "$DIR" -name '*php'
-		find "$DIR" -name '*php' | xargs rm -rf
+	for DIR in ${WRITEABLE_DIRS[@]}
+	do
+		# Scan directory
+		if [ -d "$DIR" ]
+			then
+			echo "Scanning and removing PHP files from $DIR..."
+			find "$DIR" -name '*php'
+			find "$DIR" -name '*php' | xargs rm -rf
 
-		echo "Scanning and removing HTML files from $DIR..."
-		find "$DIR" -name '*html'
-		find "$DIR" -name '*htm'
-		find "$DIR" -name '*html' | xargs rm -rf
-		find "$DIR" -name '*htm' | xargs rm -rf
+			echo "Scanning and removing HTML files from $DIR..."
+			find "$DIR" -name '*html'
+			find "$DIR" -name '*htm'
+			find "$DIR" -name '*html' | xargs rm -rf
+			find "$DIR" -name '*htm' | xargs rm -rf
 
-		echo "Updating file ownership to $WEB_OWNER $DIR..."
-		chown $WEB_OWNER $DIR -R
-	else
-		echo "Error: $PWD/$DIR not found."
-	fi
-done
+			if [ $WEB_OWNER ]
+				then
+				echo "Updating file ownership to $WEB_OWNER $DIR..."
+				chown $WEB_OWNER $DIR -R
+			fi
+		else
+			echo "Error: $ROOT_DIR/$DIR not found."
+		fi
+	done
+fi
 
 # Process writable files
-for WFILE in ${WRITEABLE_FILES[@]}
-do
-	# Scan file
-	if [ -f "$WFILE" ]
+if [ "$WRITEABLE_FILES" ]
 	then
-		echo "Updating file ownership to $WEB_OWNER $WFILE..."
-		chown $WEB_OWNER $WFILE
+	for WFILE in ${WRITEABLE_FILES[@]}
+	do
+		# Scan file
+		if [ -f "$WFILE" ]
+		then
+			if [ $WEB_OWNER ]
+				then
+				echo "Updating file ownership to $WEB_OWNER $WFILE..."
+				chown $WEB_OWNER $WFILE
+			fi
 
-		echo "Updating file permissions to 755 on $WFILE..."
-		chmod 755 $WFILE
-	else
-		echo "Error: $PWD/$WFILE not found."
-	fi
-done
+			echo "Updating file permissions to $FILE_PERM on $WFILE..."
+			chmod $FILE_PERM $WFILE
+		else
+			echo "Error: $ROOT_DIR/$WFILE not found."
+		fi
+	done
+fi
 
 echo "Scan complete!"

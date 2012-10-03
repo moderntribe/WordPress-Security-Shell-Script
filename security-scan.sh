@@ -14,23 +14,32 @@
 # Root web directory
 ROOT_DIR="/absolute/path/to/the/web/root/folder"
 
-# List of all PHP writeable directories
-WRITEABLE_DIRS=( "relative/path1" "relative/path2" "etc..." )
+# Optional list of all PHP writeable directories
+# WRITEABLE_DIRS=( "relative/path1" "relative/path2" "etc..." )
 
-# List of all PHP writeable files
-WRITEABLE_FILES=( "relative/file/path1.txt" "realtive/file/path2.txt" "etc..." )
+# Optional list of all PHP writeable files
+# WRITEABLE_FILES=( "relative/file/path1.txt" "realtive/file/path2.txt" "etc..." )
 
-# PHP writeable user:group - this should be whatever the user:group is that PHP is using
-WEB_OWNER="www-data:www-data"
+# Optional PHP writeable user:group - this should be whatever the user:group is that PHP is using
+# WEB_OWNER="www-data:www-data"
 
-# Private code user:group
-CODE_OWNER="www:www"
+# Optional private code user:group
+# CODE_OWNER="www:www"
 
-# Permissions for directories (defaults to 755)
-DIR_PERM="755"
+# Optional permissions for directories (defaults to 755)
+# DIR_PERM="755"
 
-# Permissions for files (defaults to 644)
-FILE_PERM="644"
+# Optional permissions for files (defaults to 644)
+# FILE_PERM="644"
+
+# Optional flag to skip SVN processing
+# BYPASS_SVN=true
+
+# Optional flag to skip GIT processing
+# BYPASS_GIT=true
+
+# Optional flag to kill GIT locking
+# KILL_GITLOCK=true
 
 # Include the actual script (use the full path)
-source /absolute/path/to/this/folder/lib/security-scan.lib.sh
+. /absolute/path/to/this/folder/lib/security-scan.lib.sh

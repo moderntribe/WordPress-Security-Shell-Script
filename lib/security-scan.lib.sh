@@ -48,6 +48,7 @@ done
 # Change directories to the webroot (ROOT_DIR).
 if [ -d $ROOT_DIR ]
 then
+	CURRENT_DIR=eval pwd
 	cd "$ROOT_DIR"
 else
 	echo "Error: the directory specified in ROOT_DIR does not exist."
@@ -169,3 +170,4 @@ if [ "$WRITEABLE_FILES" ]
 fi
 
 echo "Scan complete!"
+cd "$CURRENT_DIR"

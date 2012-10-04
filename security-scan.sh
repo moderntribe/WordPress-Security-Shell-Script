@@ -15,10 +15,10 @@
 ROOT_DIR="/absolute/path/to/the/web/root/folder"
 
 # Optional list of all PHP writeable directories
-# WRITEABLE_DIRS=( "relative/path1" "relative/path2" "etc..." )
+# WRITEABLE_DIRS=( "wp-content/uploads" "wp-content/blogs.dir" "wp-content/cache" )
 
 # Optional list of all PHP writeable files
-# WRITEABLE_FILES=( "relative/file/path1.txt" "realtive/file/path2.txt" "etc..." )
+# WRITEABLE_FILES=( "wp-config.php" "wp-content/advanced-cache.php" "wp-content/cache-config.php" )
 
 # Optional PHP writeable user:group - this should be whatever the user:group is that PHP is using
 # WEB_OWNER="www-data:www-data"

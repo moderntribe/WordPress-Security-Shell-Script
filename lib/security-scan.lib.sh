@@ -3,7 +3,7 @@
 ## WordPress Security Scan Script
 ## Copyright by Peter Chester of Modern Tribe, Inc.
 ## Permission to copy and modify is granted under the GPL2 license
-## Last revised 2012-10-03
+## Last revised 2012-10-04
 ##
 ## DESCRIPTION:
 ##
@@ -81,7 +81,7 @@ if [ -z $BYPASS_GIT ] && [ -d ".git" ]
 then
 	echo "Detected GIT environment"
 
-	if [ $KILL_GITLOCK ] && [ f ".git/index.lock" ]
+	if [ $KILL_GITLOCK ] && [ -f ".git/index.lock" ]
 	then
 		echo "GIT appears to be LOCKED. Deleteing .git/index.lock."
 		rm -rf ".git/index.lock"

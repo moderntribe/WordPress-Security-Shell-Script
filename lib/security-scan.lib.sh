@@ -94,7 +94,8 @@ then
 	git pull
 
 	echo "Attempting to update Submodules..."
-	git submodule update --init --recursive
+	git submodule init
+	#git submodule update --init --recursive
 	#git submodule foreach --recursive git pull
 
 	echo "Cleaning GIT..."

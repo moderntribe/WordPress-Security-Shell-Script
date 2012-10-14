@@ -87,6 +87,9 @@ then
 		rm -rf ".git/index.lock"
 	fi
 
+	echo "Make sure GIT ignores file perms..."
+	git config core.filemode false
+
 	echo "Resetting GIT..."
 	git reset --hard HEAD
 

@@ -10,11 +10,6 @@
 ## This file can be placed anywhere on your server as long as the references
 ## back to the ROOT_DIR and the library (last line) are absolute.
 ##
-## Note, if you're using this with a GIT based install, you'll probably want
-## to make sure that GIT ignores file permissions using the following command:
-##
-## git config core.filemode false
-##
 
 # Root web directory
 ROOT_DIR="/absolute/path/to/the/web/root/folder"

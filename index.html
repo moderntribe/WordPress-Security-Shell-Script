@@ -1,47 +1,68 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>WordPress Security and GIT/SVN Deployment Script by peterchester</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="WordPress Security and GIT/SVN Deployment Script : A shell script for cron based version control deployments and security scans of WordPress." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>WordPress Security and GIT/SVN Deployment Script</title>
   </head>
 
   <body>
-    <div id="container">
-      <div class="inner">
 
-        <header>
-          <h1>WordPress Security and GIT/SVN Deployment Script</h1>
-          <h2>A shell script for cron based version control deployments and security scans of WordPress.</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/moderntribe/WordPress-Security-Shell-Script">View on GitHub</a>
+
+          <h1 id="project_title">WordPress Security and GIT/SVN Deployment Script</h1>
+          <h2 id="project_tagline">A shell script for cron based version control deployments and security scans of WordPress.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/moderntribe/WordPress-Security-Shell-Script/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/moderntribe/WordPress-Security-Shell-Script/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
+    </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/peterchester/WordPress-Security-Shell-Script/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/peterchester/WordPress-Security-Shell-Script/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/peterchester/WordPress-Security-Shell-Script" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h2>Summary</h2>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>Summary</h2>
 
 <p>This script was written to quickly and easily set up automated deployment and security scanning of WordPress installs. The idea is that if you have your WordPress install set up on GIT or SVN, you can use this script to regularly update and secure your site(s).</p>
 
-<h2>Installation</h2>
+<ul>
+<li>Uses SVN or GIT to make sure no rogue files exist in an install</li>
+<li>Removes PHP,HTML and HTM files from writable directories such as blogs.dir and uploads.</li>
+<li>Updates and maintains file and folder permissions and ownership.</li>
+<li>Fully configurable.</li>
+<li>Effectively acts as a deployment system. Every time you run the script, your version controlled code is deployed.</li>
+</ul><h2>Usage</h2>
+
+<p><code>bash mydomain.security-scan.sh</code></p>
+
+<p>In some cases, 'bash' doesn't work and in stead you would invoke the script like this:</p>
+
+<p><code>. mydomain.security-scan.sh</code></p>
+
+<p>It is recommended that you set this up on a crontab so that the scan is regularly performed. Ideally the script lives outside of your webroot directory. See installation for more details.</p>
+
+<h2>Todo</h2>
+
+<ul>
+<li>Possibly scan wp-config.php and .htaccess for security</li>
+<li>Possibly update the lib script to also accept parameters as arguments so that the config file is optional and the lib script can be executed directly.</li>
+</ul><h2>Installation</h2>
 
 <p>These instructions assume that you have basic *nix systems skills. If you read through this and feel totally confused, then you should probably seek some professional help in installing this.</p>
 
 <p>Although this script is flexible enough to be configured and used in a variety of ways. Here's how we prefer to install it:</p>
 
-<h1>Put the Script on Your Server</h1>
+<h1>Download the Script onto Your Server</h1>
 
 <p>Change directories to the folder above the webroot.</p>
 
@@ -61,21 +82,21 @@
 
 <p>Checkout the security scripts code.</p>
 
-<p><code>git checkout git://github.com/peterchester/WordPress-Security-Shell-Script.git security-script</code></p>
+<p><code>git checkout git://github.com/moderntribe/WordPress-Security-Shell-Script.git security-script</code></p>
 
-<h1>Set up a config</h1>
+<h1>Set up a Local Config</h1>
 
 <p>While still in the scripts folder, copy the sample script to a new file that you can configure for your website.</p>
 
-<p><code>cp security-script/security-scan.sh mydomain.security-scan.sh</code></p>
+<p><code>cp security-script/security-scan.config.sample.sh mydomain.security-scan.sh</code></p>
 
-<p>Edit the file (I prefer to use Nano for this. You can choose to use whatever or even FTP and use your favorite file editor)</p>
+<p>Edit the file (I prefer to use Nano for this. You can choose to use whatever or even FTP and use your favorite file editor). The various configuration options are documented in the sample config file.</p>
 
 <p><code>nano mydomain.security-scan.sh</code></p>
 
 <p>Define at least ROOT_DIR, WRITEABLE_DIRS and the last line in the script where we include the library. You might also want to define KILL_GITLOCK as true to ensure that this script never gets locked out of making GIT updates.</p>
 
-<h1>Test the script</h1>
+<h1>Test the Script</h1>
 
 <p>Backup your webroot incase the script messes things up.</p>
 
@@ -85,7 +106,7 @@
 
 <p><code>bash /path/above/your/webroot/scripts/mydomain.security-scan.sh</code></p>
 
-<h1>Set up a crontab</h1>
+<h1>Set up a Crontab</h1>
 
 <p>Open your cron for editing:</p>
 
@@ -111,16 +132,19 @@
 
 <h2>Support or Contact</h2>
 
-<p>This code is unsupported and offered on an "as is" basis. If you would like support we recommend either asking about it on <a href="http://stackoverflow.com/search?q=wordpress+security+scan">Stack Overflow</a> or entering an issue on <a href="https://github.com/peterchester/WordPress-Security-Shell-Script/issues">the github tracker</a></p>
-        </section>
-
-        <footer>
-          WordPress Security and GIT/SVN Deployment Script is maintained by <a href="https://github.com/peterchester">peterchester</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+<p>This code is unsupported and offered on an "as is" basis. If you would like support we recommend either asking about it on <a href="http://stackoverflow.com/search?q=wordpress+security+scan">Stack Overflow</a> or entering an issue on <a href="https://github.com/moderntribe/WordPress-Security-Shell-Script/issues">the github tracker</a></p>
+      </section>
     </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">WordPress Security and GIT/SVN Deployment Script maintained by <a href="https://github.com/moderntribe">moderntribe</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>

@@ -3,7 +3,7 @@
 ## WordPress Security Scan Script
 ## Copyright by Peter Chester of Modern Tribe, Inc.
 ## Permission to copy and modify is granted under the GPL2 license
-## Last revised 2012-10-04
+## Last revised 2012-10-14
 ##
 ## DESCRIPTION:
 ##

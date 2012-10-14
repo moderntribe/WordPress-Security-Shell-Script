@@ -14,6 +14,21 @@ This script was written to quickly and easily set up automated deployment and se
 
 Version 2012.10.14
 
+## Important Warning!!!
+
+This script will delete files and folders. If you do not configure your repository and this script correctly you can irreparably damage your website. We are not responsible for catastrophes caused by the mis-use (or use) of this script.
+
+To best ensure that your system does not suffer from damage due to file deletions, make sure that you BACK UP YOUR ENTIRE WEBROOT before running this script.
+
+Also, it is essential that your GIT/SVN ignore configuration is maintained. This script ASSUMES THAT UNVERSIONED FILES THAT ARE NOT IGNORED SHOULD BE DELETED.
+
+For example, it is essential that at a minimum, the following is in your ignore configuration:
+
+wp-config.php
+wp-content/uploads
+
+Depending on your configuration, you may also need to ignore other files & folders such as .htaccess, wp-content/cache, wp-content/blogs.dir, wp-content/advanced-cache.php, etc...
+
 ## Usage
 
 `bash mydomain.security-scan.sh`
@@ -34,6 +49,14 @@ It is recommended that you set this up on a crontab so that the scan is regularl
 These instructions assume that you have basic *nix systems skills. If you read through this and feel totally confused, then you should probably seek some professional help in installing this.
 
 Although this script is flexible enough to be configured and used in a variety of ways. Here's how we prefer to install it:
+
+# Install your Versioned Code
+
+Before we do anything with this script, we're making some assumptions about your code setup. In particular, we're assuming that you've got your WordPress code in either GIT or SVN version control and that you've checked out that code into your webroot on your server.
+
+As per our Important Warning above, we're also assuming that you've got proper GIT/SVN ignore configurations so that when the site is running, there are NO UNVERSIONED FILES aside from ones that you've explicitly ignored.
+
+This script supports traditional WordPress configurations as well as @markjaquith's Skeleton configuration.
 
 # Download the Script onto Your Server
 

@@ -2,35 +2,11 @@
 
 ## WordPress Security Scan Script
 ## Copyright by Peter Chester of Modern Tribe, Inc.
-## Permission to copy and modify is granted under the GPL2 license
+## Permission to copy and modify is granted under the GPL3 license
 ## Last revised 2012-10-14
 ##
-## DESCRIPTION:
-##
-## * Uses SVN or GIT to make sure no rogue files exist in an install
-## * Removes PHP files from blogs.dir and uploads
-## * Removes HTML/HTM files from blogs.dir and uploads
-## * Updates file and folder permissions and ownership
-##
-## * Bonus: this effectively acts as a deployment system. Every time you run
-##   the script, your version controlled code is deployed.
-##
-## USAGE:
-##
-## sudo bash security-scan.sh
-##
-## It is recommended that you set this up with a cron so that the scan is
-## regularly performed. Ideally the script lives outside of your webroot
-## directory. The cron would looks something like this:
-##
-## */5 * * * * bash /path/to/security-scan.sh
-##
-## This will run the cron once every 5 minutes.
-##
-## TODO:
-##
-## * Scan nginx/htaccess files for security
-##
+## For more information see:
+## http://github.com/moderntribe/WordPress-Security-Shell-Script
 
 # Check for required variables.
 REQUIRED_VARS=( "ROOT_DIR" )

@@ -59,7 +59,7 @@ Checkout the security scripts code.
 
 While still in the scripts folder, copy the sample script to a new file that you can configure for your website.
 
-`cp security-script/security-scan.sh mydomain.security-scan.sh`
+`cp security-script/security-scan.config.sample.sh mydomain.security-scan.sh`
 
 Edit the file (I prefer to use Nano for this. You can choose to use whatever or even FTP and use your favorite file editor). The various configuration options are documented in the sample config file.
 

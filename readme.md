@@ -12,6 +12,8 @@ This script was written to quickly and easily set up automated deployment and se
 * Fully configurable.
 * Effectively acts as a deployment system. Every time you run the script, your version controlled code is deployed.
 
+Version 2012.10.14
+
 ## Usage
 
 `bash mydomain.security-scan.sh`

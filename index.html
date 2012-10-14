@@ -43,6 +43,21 @@
 <li>Effectively acts as a deployment system. Every time you run the script, your version controlled code is deployed.</li>
 </ul><p>Version 2012.10.14</p>
 
+<h2>Important Warning!!!</h2>
+
+<p>This script will delete files and folders. If you do not configure your repository and this script correctly you can irreparably damage your website. We are not responsible for catastrophes caused by the mis-use (or use) of this script.</p>
+
+<p>To best ensure that your system does not suffer from damage due to file deletions, make sure that you BACK UP YOUR ENTIRE WEBROOT before running this script.</p>
+
+<p>Also, it is essential that your GIT/SVN ignore configuration is maintained. This script ASSUMES THAT UNVERSIONED FILES THAT ARE NOT IGNORED SHOULD BE DELETED.</p>
+
+<p>For example, it is essential that at a minimum, the following is in your ignore configuration:</p>
+
+<p><code>wp-config.php
+wp-content/uploads</code></p>
+
+<p>Depending on your configuration, you may also need to ignore other files &amp; folders such as .htaccess, wp-content/cache, wp-content/blogs.dir, wp-content/advanced-cache.php, etc...</p>
+
 <h2>Usage</h2>
 
 <p><code>bash mydomain.security-scan.sh</code></p>
@@ -63,6 +78,14 @@
 <p>These instructions assume that you have basic *nix systems skills. If you read through this and feel totally confused, then you should probably seek some professional help in installing this.</p>
 
 <p>Although this script is flexible enough to be configured and used in a variety of ways. Here's how we prefer to install it:</p>
+
+<h1>Install your Versioned Code</h1>
+
+<p>Before we do anything with this script, we're making some assumptions about your code setup. In particular, we're assuming that you've got your WordPress code in either GIT or SVN version control and that you've checked out that code into your webroot on your server.</p>
+
+<p>As per our Important Warning above, we're also assuming that you've got proper GIT/SVN ignore configurations so that when the site is running, there are NO UNVERSIONED FILES aside from ones that you've explicitly ignored.</p>
+
+<p>This script supports traditional WordPress configurations as well as <a href="https://github.com/markjaquith" class="user-mention">@markjaquith</a>'s Skeleton configuration.</p>
 
 <h1>Download the Script onto Your Server</h1>
 

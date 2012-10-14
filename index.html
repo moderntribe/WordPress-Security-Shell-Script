@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>WordPress Security and GIT/SVN Deployment Script by peterchester</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>WordPress Security and GIT/SVN Deployment Script</h1>
+          <h2>A shell script for cron based version control deployments and security scans of WordPress.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/peterchester/WordPress-Security-Shell-Script/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/peterchester/WordPress-Security-Shell-Script/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/peterchester/WordPress-Security-Shell-Script" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h2>Summary</h2>
+
+<p>This script was written to quickly and easily set up automated deployment and security scanning of WordPress installs. The idea is that if you have your WordPress install set up on GIT or SVN, you can use this script to regularly update and secure your site(s).</p>
+
+<h2>Installation</h2>
+
+<p>These instructions assume that you have basic *nix systems skills. If you read through this and feel totally confused, then you should probably seek some professional help in installing this.</p>
+
+<p>Although this script is flexible enough to be configured and used in a variety of ways. Here's how we prefer to install it:</p>
+
+<h1>Put the Script on Your Server</h1>
+
+<p>Change directories to the folder above the webroot.</p>
+
+<p><code>cd /path/above/your/webroot</code></p>
+
+<p>Make a folder called scripts to hold this script and any others you might want to run.</p>
+
+<p><code>mkdir scripts</code></p>
+
+<p>Change directories to your scripts folder.</p>
+
+<p><code>cd scripts</code></p>
+
+<p>Initialize GIT.</p>
+
+<p><code>git init</code></p>
+
+<p>Checkout the security scripts code.</p>
+
+<p><code>git checkout git://github.com/peterchester/WordPress-Security-Shell-Script.git security-script</code></p>
+
+<h1>Set up a config</h1>
+
+<p>While still in the scripts folder, copy the sample script to a new file that you can configure for your website.</p>
+
+<p><code>cp security-script/security-scan.sh mydomain.security-scan.sh</code></p>
+
+<p>Edit the file (I prefer to use Nano for this. You can choose to use whatever or even FTP and use your favorite file editor)</p>
+
+<p><code>nano mydomain.security-scan.sh</code></p>
+
+<p>Define at least ROOT_DIR, WRITEABLE_DIRS and the last line in the script where we include the library. You might also want to define KILL_GITLOCK as true to ensure that this script never gets locked out of making GIT updates.</p>
+
+<h1>Test the script</h1>
+
+<p>Backup your webroot incase the script messes things up.</p>
+
+<p><code>cp -rfp /path/to/your/webroot /path/to/your/webroot.bk</code></p>
+
+<p>Run the script (not this should be running the copy you made).</p>
+
+<p><code>bash /path/above/your/webroot/scripts/mydomain.security-scan.sh</code></p>
+
+<h1>Set up a crontab</h1>
+
+<p>Open your cron for editing:</p>
+
+<p><code>crontab -e</code></p>
+
+<p>Run this every 5 minutes or so. You can also choose to output the results to a log file.</p>
+
+<p>*/5 * * * * bash /path/above/your/webroot/scripts/mydomain.security-scan.sh &gt; /dev/null 2&gt;&amp;1</p>
+
+<h2>License</h2>
+
+<p>Copyright Modern Tribe, Inc. (<a href="https://github.com/moderntribeinc" class="user-mention">@moderntribeinc</a>) 2012</p>
+
+<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+<h2>Authors and Contributors</h2>
+
+<p>Authored by Chaim Peter Chester (<a href="https://github.com/peterchester" class="user-mention">@peterchester</a>) with contributions from Daniel Dvorkin (<a href="https://github.com/MZAWeb" class="user-mention">@MZAWeb</a>) and Jonathan Brinley (<a href="https://github.com/jbrinley" class="user-mention">@jbrinley</a>).</p>
+
+<h2>Support or Contact</h2>
+
+<p>This code is unsupported and offered on an "as is" basis. If you would like support we recommend either asking about it on <a href="http://stackoverflow.com/search?q=wordpress+security+scan">Stack Overflow</a> or entering an issue on <a href="https://github.com/peterchester/WordPress-Security-Shell-Script/issues">the github tracker</a></p>
+        </section>
+
+        <footer>
+          WordPress Security and GIT/SVN Deployment Script is maintained by <a href="https://github.com/peterchester">peterchester</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-WordPress Security and GIT/SVN Deployment Script
+# WordPress Security and GIT/SVN Deployment Script
 
 A shell script for cron based version control deployments and security scans of WordPress.
 

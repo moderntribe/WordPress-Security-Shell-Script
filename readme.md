@@ -24,8 +24,8 @@ Also, it is essential that your GIT/SVN ignore configuration is maintained. This
 
 For example, it is essential that at a minimum, the following is in your ignore configuration:
 
-wp-config.php
-wp-content/uploads
+* wp-config.php
+* wp-content/uploads
 
 Depending on your configuration, you may also need to ignore other files & folders such as .htaccess, wp-content/cache, wp-content/blogs.dir, wp-content/advanced-cache.php, etc...
 

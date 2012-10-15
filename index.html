@@ -41,7 +41,7 @@
 <li>Updates and maintains file and folder permissions and ownership.</li>
 <li>Fully configurable.</li>
 <li>Effectively acts as a deployment system. Every time you run the script, your version controlled code is deployed.</li>
-</ul><p>Version 2012.10.14</p>
+</ul><p>Version 2012.10.15</p>
 
 <h2>Important Warning!!!</h2>
 
@@ -140,6 +140,8 @@
 <p>Run this every 5 minutes or so. You can also choose to output the results to a log file.</p>
 
 <p>*/5 * * * * bash /path/above/your/webroot/scripts/mydomain.security-scan.sh &gt; /dev/null 2&gt;&amp;1</p>
+
+<p>Tip: If you want to get emailed when there are errors, you can set up the cron to email you the output and comment out the VERBOSE parameter in the config so that it only returns an output if there is an error.</p>
 
 <h2>License</h2>
 

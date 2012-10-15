@@ -12,7 +12,7 @@ This script was written to quickly and easily set up automated deployment and se
 * Fully configurable.
 * Effectively acts as a deployment system. Every time you run the script, your version controlled code is deployed.
 
-Version 2012.10.14
+Version 2012.10.15
 
 ## Important Warning!!!
 
@@ -111,6 +111,8 @@ Open your cron for editing:
 Run this every 5 minutes or so. You can also choose to output the results to a log file.
 
 */5 * * * * bash /path/above/your/webroot/scripts/mydomain.security-scan.sh > /dev/null 2>&1
+
+Tip: If you want to get emailed when there are errors, you can set up the cron to email you the output and comment out the VERBOSE parameter in the config so that it only returns an output if there is an error.
 
 ## License
 

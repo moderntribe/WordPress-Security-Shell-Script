@@ -85,6 +85,12 @@ ROOT_DIR="/absolute/path/to/the/web/root/folder"
 # KILL_GITLOCK=true
 
 
+# Optional flag to toggle script output. If $VERBOSE is set to true then the
+# script will output all messages, otherwise it only outputs errors.
+
+VERBOSE=true
+
+
 # Include the actual script (use the full path). Up to this point all we've
 # been doing is configuring the script. All this configuration will do nothing
 # if you don't actually then run the script :)

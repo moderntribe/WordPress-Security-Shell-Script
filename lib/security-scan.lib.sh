@@ -3,7 +3,7 @@
 ## WordPress Security Scan Script
 ## Copyright by Peter Chester of Modern Tribe, Inc.
 ## Permission to copy and modify is granted under the GPL3 license
-## Version 2012.10.14
+## Version 2012.10.15
 ##
 ## For more information see:
 ## http://github.com/moderntribe/WordPress-Security-Shell-Script
@@ -24,7 +24,7 @@ done
 # Change directories to the webroot (ROOT_DIR).
 if [ -d $ROOT_DIR ]
 then
-	CURRENT_DIR=eval pwd
+	CURRENT_DIR=$(pwd)
 	cd "$ROOT_DIR"
 else
 	echo "Error: the directory specified in ROOT_DIR does not exist."
@@ -32,70 +32,70 @@ else
 	exit
 fi
 
-echo "Running scan on $ROOT_DIR..."
+[ $VERBOSE ] && echo "Running scan on $ROOT_DIR...";
 
 # SVN Scan
 if [ -z $BYPASS_SVN ] && [ -d ".svn" ]
 then
-	echo "Detected SVN environment"
+	[ $VERBOSE ] && echo "Detected SVN environment"
 
-	echo "Cleaning SVN..."
+	[ $VERBOSE ] && echo "Cleaning SVN..."
 	svn cleanup
 
-	echo "Updating SVN..."
+	[ $VERBOSE ] && echo "Updating SVN..."
 	svn up
 
-	echo "Reverting SVN..."
+	[ $VERBOSE ] && echo "Reverting SVN..."
 	svn revert -R .
 
-	echo "Pruning unversioned files..."
+	[ $VERBOSE ] && echo "Pruning unversioned files..."
 	rm -rf `svn status . | grep '^?' | awk '{ print $2 }' | xargs`
 fi
 
 # GIT Scan
 if [ -z $BYPASS_GIT ] && [ -d ".git" ]
 then
-	echo "Detected GIT environment"
+	[ $VERBOSE ] && echo "Detected GIT environment"
 
 	if [ $KILL_GITLOCK ] && [ -f ".git/index.lock" ]
 	then
-		echo "GIT appears to be LOCKED. Deleteing .git/index.lock."
+		[ $VERBOSE ] && echo "GIT appears to be LOCKED. Deleteing .git/index.lock."
 		rm -rf ".git/index.lock"
 	fi
 
-	echo "Make sure GIT ignores file perms..."
+	[ $VERBOSE ] && echo "Make sure GIT ignores file perms..."
 	git config core.filemode false
 
-	echo "Resetting GIT..."
+	[ $VERBOSE ] && echo "Resetting GIT..."
 	git reset --hard HEAD
 
-	echo "Pulling GIT..."
+	[ $VERBOSE ] && echo "Pulling GIT..."
 	git pull
 
-	echo "Attempting to update Submodules..."
+	[ $VERBOSE ] && echo "Attempting to update Submodules..."
 	git submodule init
 	#git submodule update --init --recursive
 	#git submodule foreach --recursive git pull
 
-	echo "Cleaning GIT..."
+	[ $VERBOSE ] && echo "Cleaning GIT..."
 	git clean -df
 fi
 
 # Adjusting directory permissions
 if [ -z $DIR_PERM ]; then DIR_PERM="755"; fi
-echo "Updating file permissions on all directories to be $DIR_PERM"
+[ $VERBOSE ] && echo "Updating file permissions on all directories to be $DIR_PERM"
 find "$ROOT_DIR" -type d ! -perm "$DIR_PERM" -exec chmod "$DIR_PERM" {} \;
 
 # Adjust file permissions
 if [ -z $FILE_PERM ]; then FILE_PERM="644"; fi
-echo "Updating file permissions on all files to be $FILE_PERM"
+[ $VERBOSE ] && echo "Updating file permissions on all files to be $FILE_PERM"
 find "$ROOT_DIR" -type f ! -perm "$FILE_PERM" -exec chmod "$FILE_PERM" {} \;
 
 # Update all file owners
 if [ $CODE_OWNER ]
 	then
-	echo "Update all files to be owned by $CODE_OWNER"
-	chown "$CODE_OWNER" "$ROOT_DIR" -R
+	[ $VERBOSE ] && echo "Update all files to be owned by $CODE_OWNER"
+	chown -R "$CODE_OWNER" "$ROOT_DIR"
 fi
 
 # Process writable directories
@@ -106,11 +106,11 @@ if [ "$WRITEABLE_DIRS" ]
 		# Scan directory
 		if [ -d "$DIR" ]
 			then
-			echo "Scanning and removing PHP files from $DIR..."
+			[ $VERBOSE ] && echo "Scanning and removing PHP files from $DIR..."
 			find "$DIR" -name '*php'
 			find "$DIR" -name '*php' | xargs rm -rf
 
-			echo "Scanning and removing HTML files from $DIR..."
+			[ $VERBOSE ] && echo "Scanning and removing HTML files from $DIR..."
 			find "$DIR" -name '*html'
 			find "$DIR" -name '*htm'
 			find "$DIR" -name '*html' | xargs rm -rf
@@ -118,8 +118,8 @@ if [ "$WRITEABLE_DIRS" ]
 
 			if [ $WEB_OWNER ]
 				then
-				echo "Updating file ownership to $WEB_OWNER $DIR..."
-				chown $WEB_OWNER $DIR -R
+				[ $VERBOSE ] && echo "Updating file ownership to $WEB_OWNER $DIR..."
+				chown -R $WEB_OWNER $DIR
 			fi
 		else
 			echo "Error: $ROOT_DIR/$DIR not found."
@@ -137,11 +137,11 @@ if [ "$WRITEABLE_FILES" ]
 		then
 			if [ $WEB_OWNER ]
 				then
-				echo "Updating file ownership to $WEB_OWNER $WFILE..."
+				[ $VERBOSE ] && echo "Updating file ownership to $WEB_OWNER $WFILE..."
 				chown $WEB_OWNER $WFILE
 			fi
 
-			echo "Updating file permissions to $FILE_PERM on $WFILE..."
+			[ $VERBOSE ] && echo "Updating file permissions to $FILE_PERM on $WFILE..."
 			chmod $FILE_PERM $WFILE
 		else
 			echo "Error: $ROOT_DIR/$WFILE not found."
@@ -149,5 +149,5 @@ if [ "$WRITEABLE_FILES" ]
 	done
 fi
 
-echo "Scan complete!"
+[ $VERBOSE ] && echo "Scan complete!"
 cd "$CURRENT_DIR"

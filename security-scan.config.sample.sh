@@ -16,18 +16,24 @@
 
 ROOT_DIR="/absolute/path/to/the/web/root/folder"
 
+# Optional list of all PHP writeable directories that should be purged of PHP,
+# HTML, and HTM files and where their file permissions will be updated such
+# that PHP can write to the files.
+# Note that scrip array items are separated by spaces, not commas.
 
-# Optional list of all PHP writeable directories. These directories will be
-# purged of PHP, HTML, and HTM files and their file permissions will be
-# updated such that PHP can write to the files. Note that scrip array items
-# are separated by spaces, not commas.
+# SCRUB_DIRS=( "wp-content/uploads" "wp-content/blogs.dir" )
+
+
+# Optional list of all PHP writeable directories. These directories will also
+# have their file permissions updated such that PHP can write to the files.
+# Note that scrip array items are separated by spaces, not commas.
 
 # WRITEABLE_DIRS=( "wp-content/uploads" "wp-content/blogs.dir" "wp-content/cache" )
 
 
 # Optional list of all PHP writeable files. These files will have their file
-# permissions updated such that PHP can write to them. Note that scrip array
-# items are separated by spaces, not commas.
+# permissions updated such that PHP can write to them.
+# Note that scrip array items are separated by spaces, not commas.
 
 # WRITEABLE_FILES=( "wp-config.php" "wp-content/advanced-cache.php" "wp-content/cache-config.php" )
 

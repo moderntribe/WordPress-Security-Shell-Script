@@ -3,7 +3,7 @@
 ## WordPress Security Scan Script
 ## Copyright by Peter Chester of Modern Tribe, Inc.
 ## Permission to copy and modify is granted under the GPL3 license
-## Version 2012.10.15
+## Version 2013.01.11
 ##
 ## For more information see:
 ## http://github.com/moderntribe/WordPress-Security-Shell-Script
@@ -98,10 +98,10 @@ if [ $CODE_OWNER ]
 	chown -R "$CODE_OWNER" "$ROOT_DIR"
 fi
 
-# Process writable directories
-if [ "$WRITEABLE_DIRS" ]
+# Process scrub directories
+if [ "$SCRUB_DIRS" ]
 	then
-	for DIR in ${WRITEABLE_DIRS[@]}
+	for DIR in ${SCRUB_DIRS[@]}
 	do
 		# Scan directory
 		if [ -d "$DIR" ]
@@ -116,6 +116,25 @@ if [ "$WRITEABLE_DIRS" ]
 			find "$DIR" -name '*html' | xargs rm -rf
 			find "$DIR" -name '*htm' | xargs rm -rf
 
+			if [ $WEB_OWNER ]
+				then
+				[ $VERBOSE ] && echo "Updating file ownership to $WEB_OWNER $DIR..."
+				chown -R $WEB_OWNER $DIR
+			fi
+		else
+			echo "Error: $ROOT_DIR/$DIR not found."
+		fi
+	done
+fi
+
+# Process writable directories
+if [ "$WRITEABLE_DIRS" ]
+	then
+	for DIR in ${WRITEABLE_DIRS[@]}
+	do
+		# Scan directory
+		if [ -d "$DIR" ]
+			then
 			if [ $WEB_OWNER ]
 				then
 				[ $VERBOSE ] && echo "Updating file ownership to $WEB_OWNER $DIR..."

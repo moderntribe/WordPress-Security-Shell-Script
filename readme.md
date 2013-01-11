@@ -12,11 +12,11 @@ This script was written to quickly and easily set up automated deployment and se
 * Fully configurable.
 * Effectively acts as a deployment system. Every time you run the script, your version controlled code is deployed.
 
-Version 2012.10.15
+Version 2013.01.11
 
 ## Important Warning!!!
 
-This script will delete files and folders. If you do not configure your repository and this script correctly you can irreparably damage your website. We are not responsible for catastrophes caused by the mis-use (or use) of this script.
+This script will likely delete files and folders. If you do not configure your repository and this script correctly you can irreparably damage your website. We are not responsible for catastrophes caused by the mis-use (or use) of this script.
 
 To best ensure that your system does not suffer from damage due to file deletions, make sure that you BACK UP YOUR ENTIRE WEBROOT before running this script.
 

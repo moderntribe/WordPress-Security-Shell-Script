@@ -68,12 +68,14 @@ then
 
 	[ $VERBOSE ] && echo "Resetting GIT..."
 	git reset --hard HEAD
+	git submodule foreach --recursive 'git reset --hard HEAD'
 
 	[ $VERBOSE ] && echo "Pulling GIT..."
 	git pull
 
 	[ $VERBOSE ] && echo "Attempting to update Submodules..."
 	git submodule init
+	git submodule foreach --recursive 'git submodule update --init'
 	#git submodule update --init --recursive
 	#git submodule foreach --recursive git pull
 

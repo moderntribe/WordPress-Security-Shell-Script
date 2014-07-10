@@ -73,9 +73,8 @@ then
 	git pull
 
 	[ $VERBOSE ] && echo "Attempting to update Submodules..."
-	git submodule init
-	#git submodule update --init --recursive
-	#git submodule foreach --recursive git pull
+	git submodule foreach --recursive git reset --hard
+	git submodule update --init --recursive
 
 	[ $VERBOSE ] && echo "Cleaning GIT..."
 	git clean -df
